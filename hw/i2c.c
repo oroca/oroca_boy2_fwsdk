@@ -19,8 +19,8 @@
 
 //-- Internal Variables
 //
-static uint32_t i2c_timeout[I2C_MAX_CH];
-static uint32_t i2c_errcount[I2C_MAX_CH];
+static uint32_t i2c_timeout[_HW_DEF_I2C_CH_MAX];
+static uint32_t i2c_errcount[_HW_DEF_I2C_CH_MAX];
 
 
 //-- External Variables
@@ -29,9 +29,10 @@ static uint32_t i2c_errcount[I2C_MAX_CH];
 
 //-- Internal Functions
 //
+#ifdef _USE_HW_CMDIF_I2C
 void i2cCmdifInit(void);
 int  i2cCmdif(int argc, char **argv);
-
+#endif
 
 //-- External Functions
 //
@@ -47,7 +48,7 @@ bool i2cInit(void)
   i2cCmdifInit();
 #endif
 
-  for (i=0; i<I2C_MAX_CH; i++)
+  for (i=0; i<_HW_DEF_I2C_CH_MAX; i++)
   {
     i2c_timeout[i] = 10;
     i2c_errcount[i] = 0;

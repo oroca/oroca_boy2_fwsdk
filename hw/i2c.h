@@ -23,9 +23,6 @@
 
 
 
-#define I2C_MAX_CH      DRV_I2C_MAX_CH
-
-
 
 bool    i2cInit(void);
 

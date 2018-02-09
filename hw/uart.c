@@ -192,7 +192,6 @@ uint8_t uartRead(uint8_t channel)
   return drvUartRead(channel);
 }
 
-#if 0
 int32_t uartPrintf(uint8_t channel, const char *fmt, ...)
 {
   static bool busy = false;
@@ -229,8 +228,6 @@ int32_t uartPrintf(uint8_t channel, const char *fmt, ...)
 
   return ret;
 }
-
-#endif
 
 int32_t uartPrint(uint8_t channel, uint8_t *p_str)
 {

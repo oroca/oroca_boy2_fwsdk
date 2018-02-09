@@ -16,7 +16,7 @@
 
 #include "hw_def.h"
 
-#ifdef _USW_HW_CMDIF
+#ifdef _USE_HW_CMDIF
 
 #define CMDIF_CMD_STR_MAX             16
 #define CMDIF_CMD_LIST_MAX            _HW_DEF_CMDIF_LIST_MAX
