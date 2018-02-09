@@ -68,11 +68,11 @@ void button_isr(void *arg)
     {
       if (button_tbl[i].pressed == false)
       {
+        button_tbl[i].pressed_event = true;
         button_tbl[i].pressed_start_time = millis();
       }
 
-      button_tbl[i].pressed       = true;
-      button_tbl[i].pressed_event = true;
+      button_tbl[i].pressed = true;
       button_tbl[i].pressed_cnt++;
 
       button_tbl[i].pressed_end_time = millis();
