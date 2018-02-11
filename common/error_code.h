@@ -64,46 +64,10 @@
 #define ERR_MEMORY_WRITE_RANGE        311
 
 
-#define ERR_DXL_ERROR                 400
+#define ERR_SDRAM                     400
 
-#define ERR_DXL_ERROR_RESP            700
-
-
-#define ERR_DXL_NOT_OPEN              1000
-#define ERR_DXL_WRITE_BUFFER          1001
-#define ERR_DXL_NOT_FOUND             1002
-#define ERR_DXL_WRTIE_USB             1003
-#define ERR_DXL_WRTIE_UART            1004
-#define ERR_DXL_WRTIE_BLE             1005
-#define ERR_DXL_WRTIE_MOTOR           1006
-
-
-#define ERR_MOTION_OVER_STEP          1100
-#define ERR_MOTION_OVER_PAGE          1101
-#define ERR_MOTION_WRITE_BUFFER       1102
-#define ERR_MOTION_FAIL_START         1103
-#define ERR_MOTION_OVER_GOAL          1104
-#define ERR_MOTION_WAIT_TIMEOUT       1105
-#define ERR_MOTION_PAGE_VALID         1106
-
-#define ERR_TASK_RANGE                1200
-#define ERR_TASK_INVAILD_PARAM        1201
-#define ERR_TASK_UNKNOWN_TYPE         1202
-#define ERR_TASK_CONST_TYPE           1203
-#define ERR_TASK_VAR_LENGTH           1204
-#define ERR_TASK_VAR_TYPE             1205
-#define ERR_TASK_INVAILD_TYPE         1206
-#define ERR_TASK_PUT_INVAILD_TYPE     1207
-#define ERR_TASK_INVAILD_OPERATOR     1208
-#define ERR_TASK_ACC_LENGTH           1209
-#define ERR_TASK_STACK_OVER           1210
-#define ERR_TASK_STACK_UNDER          1211
-#define ERR_TASK_LENGTH_OVER          1212
-#define ERR_TASK_CONST_ID_CONST_ADDR_TYPE   1213
-#define ERR_TASK_INVAILD_SENTENCE     1214
-#define ERR_TASK_INVAILD_COMPUTE      1215
-
-
+#define ERR_LCD                       410
+#define ERR_LCD_TIMEOUT               411
 
 
 #endif /* ERROR_CODE_H_ */

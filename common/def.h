@@ -16,7 +16,8 @@
 
 #include "error_code.h"
 
-
+#define _DEF_DISABLE        0
+#define _DEF_ENABLE         1
 
 #define _DEF_UART1          0
 #define _DEF_UART2          1
@@ -36,6 +37,17 @@
 
 #define _DEF_LEFT           0
 #define _DEF_RIGHT          1
+#define _DEF_CENTER         2
+
+#define _DEF_PORTRAIT       0
+#define _DEF_LADSCAPE       1
+
+#define _DEF_FONT8          0
+#define _DEF_FONT12         1
+#define _DEF_FONT16         2
+#define _DEF_FONT20         3
+#define _DEF_FONT24         4
+#define _DEF_FONT_INVALD    0xFF
 
 #define _DEF_INPUT            0
 #define _DEF_INPUT_PULLUP     1
@@ -147,75 +159,16 @@
 #define _DEF_RESET_WDG      2
 #define _DEF_RESET_SOFT     3
 
+#define _DEF_DIR_CW         0
+#define _DEF_DIR_CCW        1
 
-#define _DEF_DXL_BAUD_9600      0
-#define _DEF_DXL_BAUD_57600     1
-#define _DEF_DXL_BAUD_115200    2
-#define _DEF_DXL_BAUD_1000000   3
-#define _DEF_DXL_BAUD_2000000   4
-#define _DEF_DXL_BAUD_3000000   5
-#define _DEF_DXL_BAUD_4000000   6
-#define _DEF_DXL_BAUD_4500000   7
-
-
-#define _DEF_DXL_AX             0
-#define _DEF_DXL_RX             1
-#define _DEF_DXL_MX             2
-#define _DEF_DXL_XL             3
-
-
-
-#define _DEF_DXL_MODEL_AX12A        12
-#define _DEF_DXL_MODEL_AX18A        18
-#define _DEF_DXL_MODEL_AX12W        300
-#define _DEF_DXL_MODEL_XL320        350
-#define _DEF_DXL_MODEL_XL430_W250   1060
-#define _DEF_DXL_MODEL_XM430_W210   1030
-#define _DEF_DXL_MODEL_XM430_W350   1020
-#define _DEF_DXL_MODEL_XH430_W210   1010
-#define _DEF_DXL_MODEL_XH430_W350   1000
-#define _DEF_DXL_MODEL_2XL430       1090
-
-
-#define _DEF_OLLO_IO_NONE                       0
-#define _DEF_OLLO_IO_MOTOR_SPEED                1
-#define _DEF_OLLO_IO_SERVO_POSITION             2
-#define _DEF_OLLO_IO_SERVO_SPEED                3
-#define _DEF_OLLO_IO_IR                         4
-#define _DEF_OLLO_IO_DMS                        5
-#define _DEF_OLLO_IO_TOUCH                      6
-#define _DEF_OLLO_IO_LED                        7
-#define _DEF_OLLO_IO_USERDEVICE                 8
-#define _DEF_OLLO_IO_TEMPERATURE                9
-#define _DEF_OLLO_IO_ULTRASONIC                 10
-#define _DEF_OLLO_IO_MAGNETIC                   11
-#define _DEF_OLLO_IO_MOTION_DETECTION           12
-#define _DEF_OLLO_IO_COLOR                      13
-#define _DEF_OLLO_IO_MOISTURE                   14
-#define _DEF_OLLO_IO_MOISTURE_TEMPERATURE       15
-#define _DEF_OLLO_IO_BRIGHTNESS                 16
-#define _DEF_OLLO_IO_LED_PWM_CH_P               17
-#define _DEF_OLLO_IO_LED_PWM_CH_M               18
-#define _DEF_OLLO_IO_MAX                        19
-
-
-#define _DEF_OLLO_MOTOR_WHEEL_MODE              0
-#define _DEF_OLLO_MOTOR_SERVO_MODE              1
-
-#define _DEF_DIR_CW                             0
-#define _DEF_DIR_CCW                            1
-
-#define _DEF_OLLO_TYPE_MOTOR                    0
-#define _DEF_OLLO_TYPE_SENSOR                   1
-
-
-#define _DEF_TYPE_S08                           0
-#define _DEF_TYPE_U08                           1
-#define _DEF_TYPE_S16                           2
-#define _DEF_TYPE_U16                           3
-#define _DEF_TYPE_S32                           4
-#define _DEF_TYPE_U32                           5
-#define _DEF_TYPE_F32                           6
+#define _DEF_TYPE_S08       0
+#define _DEF_TYPE_U08       1
+#define _DEF_TYPE_S16       2
+#define _DEF_TYPE_U16       3
+#define _DEF_TYPE_S32       4
+#define _DEF_TYPE_U32       5
+#define _DEF_TYPE_F32       6
 
 
 typedef uint32_t  err_code_t;
@@ -269,6 +222,16 @@ typedef struct
   uint32_t end;
   uint32_t length;
 } flash_attr_t;
+
+
+typedef struct
+{
+  int16_t X; /*!< geometric X position of drawing */
+  int16_t Y; /*!< geometric Y position of drawing */
+} pixel_t;
+// Pointer on LCD Drawing point (pixel) geometric definition
+typedef pixel_t *p_pixel;
+
 
 
 
