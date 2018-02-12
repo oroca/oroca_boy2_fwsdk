@@ -160,6 +160,8 @@ void lcdCmdifInit(void)
   cmdifAdd("lcd", lcdCmdif);
 }
 
+extern void drvLcdCopyLayer(uint32_t src_index, uint32_t dst_index);
+
 int lcdCmdif(int argc, char **argv)
 {
   bool ret = true;
@@ -174,34 +176,35 @@ int lcdCmdif(int argc, char **argv)
     {
       uint32_t x_mid, y_mid;
       bool dir = 1;
-      uint8_t idx = _DEF_LCD_LAYER2;
+      uint32_t pre_time;
 
       x_mid = lcdGetXSize()/2;
       y_mid = lcdGetYSize()/2;
 
-      lcdSelectLayer(idx);
+      lcdSelectLayer(_DEF_LCD_LAYER1);
       lcdClear(LCD_COLOR_WHITE);
+      lcdSetLayerVisible(_DEF_LCD_LAYER2, _DEF_DISABLE);
+      lcdSetLayerVisible(_DEF_LCD_LAYER1, _DEF_ENABLE);
 
-      lcdSetLayerVisible(idx, _DEF_ENABLE);
-
+      lcdSelectLayer(_DEF_LCD_LAYER2);
       while(cmdifRxAvailable() == 0)
       {
-        idx = (idx+1)%2;
-        lcdSelectLayer(idx);
+
+        pre_time = micros();
         lcdClear(LCD_COLOR_WHITE);
 
         /* Draw rectangle */
         for(i = x_mid-50; i < x_mid+50; i++)
         {
-          for(j = y_mid-50; j < y_mid+50; j++)
+          for(j = y_mid-50; j < y_mid+150; j++)
           {
-            lcdDrawPixel(i, j, LCD_COLOR_BROWN);
-            lcdDrawPixel(i, j, LCD_COLOR_BROWN);
+            lcdDrawPixel(i, j, LCD_COLOR_BLUE);
+            //lcdDrawPixel(i, j, LCD_COLOR_RED);
+            //lcdDrawPixel(i, j, LCD_COLOR_BROWN);
           }
         }
 
-        lcdSetLayerVisible(idx, _DEF_ENABLE);
-        lcdSetLayerVisible((idx+1)%2, _DEF_DISABLE);
+        drvLcdCopyLayer(_DEF_LCD_LAYER2, _DEF_LCD_LAYER1);
 
         if(y_mid >= lcdGetYSize() - 70)
         {
@@ -215,16 +218,16 @@ int lcdCmdif(int argc, char **argv)
 
         if(dir)
         {
-          x_mid++;
-          y_mid++;
+          x_mid += 5;
+          y_mid += 5;
         }
         else
         {
-          x_mid--;
-          y_mid--;
+          x_mid -= 5;
+          y_mid -= 5;
         }
-
-        delay(100);
+        cmdifPrintf("time : %d us\n", micros()-pre_time);
+        delay(10);
       }
 
       lcdClear(LCD_COLOR_WHITE);
