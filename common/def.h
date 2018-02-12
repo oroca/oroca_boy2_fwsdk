@@ -42,12 +42,9 @@
 #define _DEF_PORTRAIT       0
 #define _DEF_LADSCAPE       1
 
-#define _DEF_FONT8          0
-#define _DEF_FONT12         1
-#define _DEF_FONT16         2
-#define _DEF_FONT20         3
-#define _DEF_FONT24         4
-#define _DEF_FONT_INVALD    0xFF
+#define _DEF_LCD_LAYER1     0
+#define _DEF_LCD_LAYER2     1
+
 
 #define _DEF_INPUT            0
 #define _DEF_INPUT_PULLUP     1

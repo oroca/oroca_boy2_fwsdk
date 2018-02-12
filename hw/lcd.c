@@ -19,13 +19,23 @@ void lcdCmdifInit(void);
 int  lcdCmdif(int argc, char **argv);
 #endif
 
+static bool lcd_is_init = false;
 
+bool lcdIsInit(void)
+{
+  return lcd_is_init;
+}
 
 err_code_t  lcdInit(void)
 {
   err_code_t err;
 
   err = lcdInitEx(_DEF_LADSCAPE);
+
+  if(err == OK)
+  {
+    lcd_is_init = true;
+  }
 
 #ifdef _USE_HW_CMDIF_LCD
   lcdCmdifInit();
@@ -40,6 +50,12 @@ err_code_t  lcdInitEx(uint8_t orientation)
 
   err = drvLcdInit(orientation);
 
+  if(err == OK)
+  {
+    drvLcdInitLayer(LTDC_ACTIVE_LAYER_FOREGROUND, LCD_FB_START_ADDRESS);
+    drvLcdInitLayer(LTDC_ACTIVE_LAYER_BACKGROUND, LCD_FB_START_ADDRESS + LCD_ADDRESS_LENGTH/2);
+  }
+
   return err;
 }
 
@@ -47,6 +63,67 @@ void lcdReset(void)
 {
   drvLcdReset();
 }
+
+
+void lcdInitLayer(uint16_t layer, uint32_t fb_addr)
+{
+  drvLcdInitLayer(layer, fb_addr);
+}
+
+void lcdSelectLayer(uint32_t layer_idx)
+{
+  drvLcdSelectLayer(layer_idx);
+}
+
+uint32_t lcdReadPixel(uint16_t x_pos, uint16_t y_pos)
+{
+  return drvLcdReadPixel(x_pos, y_pos);
+}
+
+void lcdDrawPixel(uint16_t x_pos, uint16_t y_pos, uint32_t rgb_code)
+{
+  drvLcdDrawPixel(x_pos, y_pos, rgb_code);
+}
+
+void lcdClear(uint32_t color)
+{
+  drvLcdClear(color);
+}
+
+
+
+void lcdSetTransparency(uint32_t layer_idx, uint8_t transparency)
+{
+  drvLcdSetTransparency(layer_idx, transparency);
+}
+
+void lcdSetLayerAddr(uint32_t layer_idx, uint32_t addr)
+{
+  drvLcdSetLayerAddr(layer_idx, addr);
+}
+
+void lcdSetLayerWindow(uint16_t layer_idx, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
+{
+  drvLcdSetLayerWindow(layer_idx, x_pos, y_pos, width, height);
+}
+
+void lcdSetLayerVisible(uint32_t layer_idx, uint8_t state)
+{
+  drvLcdSetLayerVisible(layer_idx, state);
+}
+
+
+
+void lcdDisplayOff(void)
+{
+  drvLcdDisplayOff();
+}
+
+void lcdDisplayOn(void)
+{
+  drvLcdDisplayOn();
+}
+
 
 uint32_t lcdGetXSize(void)
 {
@@ -68,175 +145,6 @@ void lcdSetYSize(uint32_t image_height_pixels)
   drvLcdSetYSize(image_height_pixels);
 }
 
-void lcdInitLayerDefault(uint16_t layer, uint32_t fb_addr)
-{
-  drvLcdInitLayerDefault(layer, fb_addr);
-}
-
-void lcdSetTransparency(uint32_t layer_idx, uint8_t transparency)
-{
-  drvLcdSetTransparency(layer_idx, transparency);
-}
-
-void lcdSetLayerAddr(uint32_t layer_idx, uint32_t addr)
-{
-  drvLcdSetLayerAddr(layer_idx, addr);
-}
-
-void lcdSetColorKeying(uint32_t layer_idx, uint32_t rgb_value)
-{
-  drvLcdSetColorKeying(layer_idx, rgb_value);
-}
-
-void lcdResetColorKeying(uint32_t layer_idx)
-{
-  drvLcdResetColorKeying(layer_idx);
-}
-
-void lcdSetLayerWindow(uint16_t layer_idx, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
-{
-  drvLcdSetLayerWindow(layer_idx, x_pos, y_pos, width, height);
-}
-
-void lcdSelectLayer(uint32_t layer_idx)
-{
-  drvLcdSelectLayer(layer_idx);
-}
-
-void lcdSetLayerVisible(uint32_t layer_idx, uint8_t state)
-{
-  drvLcdSetLayerVisible(layer_idx, state);
-}
-
-void lcdSetTextColor(uint32_t color)
-{
-  drvLcdSetTextColor(color);
-}
-
-uint32_t lcdGetTextColor(void)
-{
-  return drvLcdGetTextColor();
-}
-
-void lcdSetBackColor(uint32_t color)
-{
-  drvLcdSetBackColor(color);
-}
-
-uint32_t lcdGetBackColor(void)
-{
-  return drvLcdGetBackColor();
-}
-
-void lcdSetFont(uint8_t font_type)
-{
-  drvLcdSetFont(font_type);
-}
-
-uint32_t lcdReadPixel(uint16_t x_pos, uint16_t y_pos)
-{
-  return drvLcdReadPixel(x_pos, y_pos);
-}
-
-void lcdDrawPixel(uint16_t x_pos, uint16_t y_pos, uint32_t rgb_code)
-{
-  drvLcdDrawPixel(x_pos, y_pos, rgb_code);
-}
-
-void lcdClear(uint32_t color)
-{
-  drvLcdClear(color);
-}
-
-void lcdClearStringLine(uint32_t line)
-{
-  drvLcdClearStringLine(line);
-}
-
-void lcdDisplayStringAtLine(uint16_t line, uint8_t *ptr)
-{
-  drvLcdDisplayStringAtLine(line, ptr);
-}
-
-void lcdDisplayStringAt(uint16_t x_pos, uint16_t y_pos, uint8_t *p_text, uint8_t align)
-{
-  drvLcdDisplayStringAt(x_pos, y_pos, p_text, align);
-}
-
-void lcdDisplayChar(uint16_t x_pos, uint16_t y_pos, uint8_t ascii)
-{
-  drvLcdDisplayChar(x_pos, y_pos, ascii);
-}
-
-void lcdDrawHLine(uint16_t x_pos, uint16_t y_pos, uint16_t length)
-{
-  drvLcdDrawHLine(x_pos, y_pos, length);
-}
-
-void lcdDrawVLine(uint16_t x_pos, uint16_t y_pos, uint16_t length)
-{
-  drvLcdDrawVLine(x_pos, y_pos, length);
-}
-
-void lcdDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
-{
-  drvLcdDrawLine(x1, y1, x2, y2);
-}
-
-void lcdDrawRect(uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
-{
-  drvLcdDrawRect(x_pos, y_pos, width, height);
-}
-
-void lcdDrawCircle(uint16_t x_pos, uint16_t y_pos, uint16_t radius)
-{
-  drvLcdDrawCircle(x_pos, y_pos, radius);
-}
-
-void lcdDrawPolygon(p_pixel points, uint16_t point_cnt)
-{
-  drvLcdDrawPolygon(points, point_cnt);
-}
-
-void lcdDrawEllipse(int32_t x_pos, int32_t y_pos, int32_t x_rad, int32_t y_rad)
-{
-  drvLcdDrawEllipse(x_pos, y_pos, x_rad, y_rad);
-}
-void lcdDrawBitmap(uint32_t x_pos, uint32_t y_pos, uint8_t *pbmp)
-{
-  drvLcdDrawBitmap(x_pos, y_pos, pbmp);
-}
-
-void lcdFillRect(uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
-{
-  drvLcdFillRect(x_pos, y_pos, width, height);
-}
-
-void lcdFillCircle(uint16_t x_pos, uint16_t y_pos, uint16_t radius)
-{
-  drvLcdFillCircle(x_pos, y_pos, radius);
-}
-
-void lcdFillPolygon(p_pixel points, uint16_t point_cnt)
-{
-  drvLcdFillPolygon(points, point_cnt);
-}
-
-void lcdFillEllipse(int32_t x_pos, int32_t y_pos, int32_t x_rad, int32_t y_rad)
-{
-  drvLcdFillEllipse(x_pos, y_pos, x_rad, y_rad);
-}
-
-void lcdDisplayOff(void)
-{
-  drvLcdDisplayOff();
-}
-
-void lcdDisplayOn(void)
-{
-  drvLcdDisplayOn();
-}
-
 
 #ifdef _USE_HW_CMDIF_LCD
 
@@ -255,18 +163,76 @@ void lcdCmdifInit(void)
 int lcdCmdif(int argc, char **argv)
 {
   bool ret = true;
-  uint32_t addr;
-  uint32_t length;
   err_code_t err_code;
   uint32_t time_pre;
   uint32_t time_process;
-  uint32_t data[256];
-  uint32_t i;
-
+  uint32_t i, j;
 
   if ((argc == 2)&&(strcmp("demo", argv[1]) == 0))
   {
+    if(lcdIsInit() == true)
+    {
+      uint32_t x_mid, y_mid;
+      bool dir = 1;
+      uint8_t idx = _DEF_LCD_LAYER2;
 
+      x_mid = lcdGetXSize()/2;
+      y_mid = lcdGetYSize()/2;
+
+      lcdSelectLayer(idx);
+      lcdClear(LCD_COLOR_WHITE);
+
+      lcdSetLayerVisible(idx, _DEF_ENABLE);
+
+      while(cmdifRxAvailable() == 0)
+      {
+        idx = (idx+1)%2;
+        lcdSelectLayer(idx);
+        lcdClear(LCD_COLOR_WHITE);
+
+        /* Draw rectangle */
+        for(i = x_mid-50; i < x_mid+50; i++)
+        {
+          for(j = y_mid-50; j < y_mid+50; j++)
+          {
+            lcdDrawPixel(i, j, LCD_COLOR_BROWN);
+            lcdDrawPixel(i, j, LCD_COLOR_BROWN);
+          }
+        }
+
+        lcdSetLayerVisible(idx, _DEF_ENABLE);
+        lcdSetLayerVisible((idx+1)%2, _DEF_DISABLE);
+
+        if(y_mid >= lcdGetYSize() - 70)
+        {
+          dir = 0;
+        }
+
+        if(y_mid - 50 <= 20)
+        {
+          dir = 1;
+        }
+
+        if(dir)
+        {
+          x_mid++;
+          y_mid++;
+        }
+        else
+        {
+          x_mid--;
+          y_mid--;
+        }
+
+        delay(100);
+      }
+
+      lcdClear(LCD_COLOR_WHITE);
+    }
+    else
+    {
+      cmdifPrintf("lcd init failed \n");
+    }
   }
   else
   {
