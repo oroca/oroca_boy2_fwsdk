@@ -50,6 +50,17 @@ err_code_t  lcdInitEx(uint8_t orientation)
     drvLcdInitLayer(_DEF_LCD_LAYER1, _HW_DEF_LCD_ADDR_LAYER1_START);
     drvLcdInitLayer(_DEF_LCD_LAYER2, _HW_DEF_LCD_ADDR_LAYER2_START);
 
+
+    lcdSelectLayer(_DEF_LCD_LAYER2);
+    lcdClear(LCD_COLOR_BLACK);
+    lcdSelectLayer(_DEF_LCD_LAYER1);
+    lcdClear(LCD_COLOR_BLACK);
+
+    lcdSetLayerVisible(_DEF_LCD_LAYER2, _DEF_DISABLE);
+    lcdSetLayerVisible(_DEF_LCD_LAYER1, _DEF_ENABLE);
+
+    lcdSelectLayer(_DEF_LCD_LAYER2);
+
     lcd_is_init = true;
   }
 
@@ -87,6 +98,10 @@ void lcdClear(uint32_t color)
   drvLcdClear(color);
 }
 
+void lcdCopyLayer(uint32_t src_index, uint32_t dst_index)
+{
+  drvLcdCopyLayer(src_index, dst_index);
+}
 
 
 err_code_t lcdSetTransparency(uint32_t layer_idx, uint8_t transparency)
@@ -157,7 +172,7 @@ void lcdCmdifInit(void)
   cmdifAdd("lcd", lcdCmdif);
 }
 
-extern void drvLcdCopyLayer(uint32_t src_index, uint32_t dst_index);
+
 
 int lcdCmdif(int argc, char **argv)
 {
@@ -202,7 +217,7 @@ int lcdCmdif(int argc, char **argv)
           }
         }
 
-        drvLcdCopyLayer(_DEF_LCD_LAYER2, _DEF_LCD_LAYER1);
+        lcdCopyLayer(_DEF_LCD_LAYER2, _DEF_LCD_LAYER1);
 
         if(y_mid >= lcdGetYSize() - 55)
         {
@@ -247,7 +262,7 @@ int lcdCmdif(int argc, char **argv)
       }
 
       lcdClear(LCD_COLOR_WHITE);
-      drvLcdCopyLayer(_DEF_LCD_LAYER2, _DEF_LCD_LAYER1);
+      lcdCopyLayer(_DEF_LCD_LAYER2, _DEF_LCD_LAYER1);
     }
     else
     {
