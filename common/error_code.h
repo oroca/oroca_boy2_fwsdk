@@ -68,6 +68,6 @@
 
 #define ERR_LCD                       410
 #define ERR_LCD_TIMEOUT               411
-
+#define ERR_LCD_INVAILD_LAYER         412
 
 #endif /* ERROR_CODE_H_ */

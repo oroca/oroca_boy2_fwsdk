@@ -12,32 +12,24 @@
 
 #ifdef _USE_HW_LCD
 
-typedef enum {
-  FONT8 = 0,
-  FONT12,
-  FONT16,
-  FONT20,
-  FONT24
-} font_type_t;
 
-
-bool lcdIsInit(void);
+bool       lcdIsInit(void);
 
 err_code_t lcdInit(void);
 err_code_t lcdInitEx(uint8_t orientation);
 void       lcdReset(void);
 
-void       lcdInitLayer(uint16_t layer, uint32_t fb_addr);
-void       lcdSelectLayer(uint32_t layer_idx);
+err_code_t lcdInitLayer(uint16_t layer_idx, uint32_t fb_addr);
+err_code_t lcdSelectLayer(uint32_t layer_idx);
 
 uint32_t   lcdReadPixel(uint16_t x_pos, uint16_t y_pos);
 void       lcdDrawPixel(uint16_t x_pos, uint16_t y_pos, uint32_t rgb_code);
 void       lcdClear(uint32_t color);
 
-void       lcdSetTransparency(uint32_t layer_idx, uint8_t transparency);
-void       lcdSetLayerAddr(uint32_t layer_idx, uint32_t addr);
-void       lcdSetLayerWindow(uint16_t layer_idx, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
-void       lcdSetLayerVisible(uint32_t layer_idx, uint8_t state);
+err_code_t lcdSetTransparency(uint32_t layer_idx, uint8_t transparency);
+err_code_t lcdSetLayerAddr(uint32_t layer_idx, uint32_t addr);
+err_code_t lcdSetLayerWindow(uint16_t layer_idx, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
+err_code_t lcdSetLayerVisible(uint32_t layer_idx, uint8_t state);
 
 void       lcdDisplayOff(void);
 void       lcdDisplayOn(void);

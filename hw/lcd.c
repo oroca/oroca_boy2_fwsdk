@@ -32,11 +32,6 @@ err_code_t  lcdInit(void)
 
   err = lcdInitEx(_DEF_LADSCAPE);
 
-  if(err == OK)
-  {
-    lcd_is_init = true;
-  }
-
 #ifdef _USE_HW_CMDIF_LCD
   lcdCmdifInit();
 #endif
@@ -52,8 +47,10 @@ err_code_t  lcdInitEx(uint8_t orientation)
 
   if(err == OK)
   {
-    drvLcdInitLayer(LTDC_ACTIVE_LAYER_FOREGROUND, LCD_FB_START_ADDRESS);
-    drvLcdInitLayer(LTDC_ACTIVE_LAYER_BACKGROUND, LCD_FB_START_ADDRESS + LCD_ADDRESS_LENGTH/2);
+    drvLcdInitLayer(_DEF_LCD_LAYER1, _HW_DEF_LCD_ADDR_LAYER1_START);
+    drvLcdInitLayer(_DEF_LCD_LAYER2, _HW_DEF_LCD_ADDR_LAYER2_START);
+
+    lcd_is_init = true;
   }
 
   return err;
@@ -65,14 +62,14 @@ void lcdReset(void)
 }
 
 
-void lcdInitLayer(uint16_t layer, uint32_t fb_addr)
+err_code_t lcdInitLayer(uint16_t layer_idx, uint32_t fb_addr)
 {
-  drvLcdInitLayer(layer, fb_addr);
+  return drvLcdInitLayer(layer_idx, fb_addr);
 }
 
-void lcdSelectLayer(uint32_t layer_idx)
+err_code_t lcdSelectLayer(uint32_t layer_idx)
 {
-  drvLcdSelectLayer(layer_idx);
+  return drvLcdSelectLayer(layer_idx);
 }
 
 uint32_t lcdReadPixel(uint16_t x_pos, uint16_t y_pos)
@@ -92,24 +89,24 @@ void lcdClear(uint32_t color)
 
 
 
-void lcdSetTransparency(uint32_t layer_idx, uint8_t transparency)
+err_code_t lcdSetTransparency(uint32_t layer_idx, uint8_t transparency)
 {
-  drvLcdSetTransparency(layer_idx, transparency);
+  return drvLcdSetTransparency(layer_idx, transparency);
 }
 
-void lcdSetLayerAddr(uint32_t layer_idx, uint32_t addr)
+err_code_t lcdSetLayerAddr(uint32_t layer_idx, uint32_t addr)
 {
-  drvLcdSetLayerAddr(layer_idx, addr);
+  return drvLcdSetLayerAddr(layer_idx, addr);
 }
 
-void lcdSetLayerWindow(uint16_t layer_idx, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
+err_code_t lcdSetLayerWindow(uint16_t layer_idx, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 {
-  drvLcdSetLayerWindow(layer_idx, x_pos, y_pos, width, height);
+  return drvLcdSetLayerWindow(layer_idx, x_pos, y_pos, width, height);
 }
 
-void lcdSetLayerVisible(uint32_t layer_idx, uint8_t state)
+err_code_t lcdSetLayerVisible(uint32_t layer_idx, uint8_t state)
 {
-  drvLcdSetLayerVisible(layer_idx, state);
+  return drvLcdSetLayerVisible(layer_idx, state);
 }
 
 
