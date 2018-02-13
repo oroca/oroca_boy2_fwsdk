@@ -18,8 +18,10 @@
 
 err_code_t sdramInit(void);
 
-err_code_t sdramWrite(uint32_t addr, uint32_t *p_data, uint32_t length);
 err_code_t sdramRead(uint32_t addr, uint32_t *p_data, uint32_t length);
+err_code_t sdramWrite(uint32_t addr, uint32_t *p_data, uint32_t length);
+err_code_t sdramWriteUntil(uint32_t addr, uint32_t *p_data, uint32_t length, uint32_t timeout);
+
 
 
 

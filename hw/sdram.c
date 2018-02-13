@@ -52,6 +52,16 @@ err_code_t sdramRead(uint32_t addr, uint32_t *p_data, uint32_t length)
   return err;
 }
 
+err_code_t sdramWriteUntil(uint32_t addr, uint32_t *p_data, uint32_t length, uint32_t timeout)
+{
+  err_code_t err;
+
+  err = drvSdramWriteDataUntilTimeout(addr, p_data, length, timeout);
+
+  return err;
+}
+
+
 
 #ifdef _USE_HW_CMDIF_SDRAM
 void sdramCmdifInit(void)
@@ -72,34 +82,55 @@ int sdramCmdif(int argc, char **argv)
   uint32_t time_pre;
   uint32_t time_process;
   uint32_t data[256];
+  uint32_t rx_data[256] = {0,};
   uint32_t i;
 
-
-  if (argc == 4)
+  if ((argc == 5)&&(strcmp("write", argv[1]) == 0))
   {
-    addr   = (uint32_t) strtoul((const char * ) argv[2], (char **)NULL, (int) 0);
-    length = (uint32_t) strtoul((const char * ) argv[3], (char **)NULL, (int) 0);
+    addr    = (uint32_t) strtoul((const char * ) argv[2], (char **)NULL, 16);
+    length  = (uint32_t) strtoul((const char * ) argv[3], (char **)NULL, 16);
+    uint32_t t_data = (uint32_t) strtoul((const char * ) argv[4], (char **)NULL, 16);
 
-    if(strcmp("write", argv[1]) == 0)
+    if (addr%4 != 0)
     {
-      if (addr%4 != 0)
-      {
-        cmdifPrintf("addr not aligned 4bytes \n");
-      }
-      else
-      {
-        data[0] = length;
-        time_pre = micros();
-        err_code = sdramWrite(addr, data, 1);
-        time_process = micros()-time_pre;
-        cmdifPrintf("flashWrite : %d, %dus\n", err_code, time_process);
-      }
+      cmdifPrintf("addr not aligned 4bytes \n");
     }
-    else if(strcmp("read", argv[1]) == 0)
+    else if((addr < SDRAM_DEVICE_ADDR)||((addr+length) > SDRAM_DEVICE_ADDR + SDRAM_DEVICE_SIZE))
+    {
+      cmdifPrintf("invalid addr \n");
+    }
+    else
+    {
+      memset(data, t_data, 256*4);
+      i = 0;
+      time_pre = micros();
+      while(i < length)
+      {
+        err_code = sdramWriteUntil(addr+i, data, 256, 10);
+        if(err_code != OK)
+        {
+          break;
+        }
+        i += (4*256);
+      }
+      time_process = micros()-time_pre;
+      cmdifPrintf("SDRAM Write : %d, %d(us)\n", err_code, time_process);
+    }
+  }
+  else if (argc == 4)
+  {
+    addr   = (uint32_t) strtoul((const char * ) argv[2], (char **)NULL, 16);
+    length = (uint32_t) strtoul((const char * ) argv[3], (char **)NULL, 16);
+
+    if(strcmp("read", argv[1]) == 0)
     {
       if (addr%4 != 0)
       {
         cmdifPrintf("addr not aligned 4bytes \n");
+      }
+      else if((addr < SDRAM_DEVICE_ADDR)||((addr+length) > SDRAM_DEVICE_ADDR + SDRAM_DEVICE_SIZE))
+      {
+        cmdifPrintf("invalid addr \n");
       }
       else
       {
@@ -110,14 +141,14 @@ int sdramCmdif(int argc, char **argv)
         time_pre = micros();
         err_code = sdramRead(addr, data, length);
         time_process = micros()-time_pre;
-        cmdifPrintf("flashRead : %d, %dus\n", err_code, time_process);
+        cmdifPrintf("SDRAM Read : %d, %d(us)\n", err_code, time_process);
         for(i = 0; i < length; i++)
         {
           if((i > 0)&&(i%10 == 0))
           {
             cmdifPrintf("\r\n");
           }
-          cmdifPrintf("%04X ", data[i]);
+          cmdifPrintf("%08X ", data[i]);
         }
         cmdifPrintf("\r\n");
       }
@@ -134,8 +165,8 @@ int sdramCmdif(int argc, char **argv)
 
   if (ret == false)
   {
-    cmdifPrintf( "flash erase addr length \n");
-    cmdifPrintf( "flash write addr data   \n");
+    cmdifPrintf( "sdram erase addr length \n");
+    cmdifPrintf( "sdram write addr length data(4bytes) \n");
   }
 
   return 0;
