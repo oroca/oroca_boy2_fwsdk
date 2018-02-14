@@ -93,9 +93,10 @@ void lcdDrawPixel(uint16_t x_pos, uint16_t y_pos, uint32_t rgb_code)
   drvLcdDrawPixel(x_pos, y_pos, rgb_code);
 }
 
-void lcdClear(uint32_t color)
+
+void lcdClear(uint32_t rgb_code)
 {
-  drvLcdClear(color);
+  drvLcdClear(rgb_code);
 }
 
 void lcdCopyLayer(uint32_t src_index, uint32_t dst_index)
@@ -159,9 +160,6 @@ void lcdSetYSize(uint32_t image_height_pixels)
 
 
 #ifdef _USE_HW_CMDIF_LCD
-
-
-
 
 void lcdCmdifInit(void)
 {

@@ -24,7 +24,7 @@ err_code_t lcdSelectLayer(uint32_t layer_idx);
 
 uint32_t   lcdReadPixel(uint16_t x_pos, uint16_t y_pos);
 void       lcdDrawPixel(uint16_t x_pos, uint16_t y_pos, uint32_t rgb_code);
-void       lcdClear(uint32_t color);
+void       lcdClear(uint32_t rgb_code);
 void       lcdCopyLayer(uint32_t src_index, uint32_t dst_index);
 
 err_code_t lcdSetTransparency(uint32_t layer_idx, uint8_t transparency);
