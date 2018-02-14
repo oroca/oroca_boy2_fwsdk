@@ -15,6 +15,8 @@
 #include <stdbool.h>
 
 #include "error_code.h"
+#include "binary.h"
+
 
 #define _DEF_DISABLE        0
 #define _DEF_ENABLE         1
@@ -249,11 +251,16 @@ typedef enum
 #define RAD_TO_DEG      57.295779513082320876798154814105
 #define EULER           2.718281828459045235360287471352
 
+#define PROGMEM
+
 #define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 
+#ifndef min
+#define min(a,b) ((a)<(b)?(a):(b))
+#endif
+
 #ifndef max
-#define max(a,b) (((a) (b)) ? (a) : (b))
-#define min(a,b) (((a) < (b)) ? (a) : (b))
+#define max(a,b) ((a)>(b)?(a):(b))
 #endif
 
 #ifndef map
@@ -273,6 +280,10 @@ typedef enum
 #ifndef sq
 #define sq(x) ((x)*(x))
 #endif
+
+
+typedef bool      boolean;
+typedef uint16_t  word;
 
 
 #endif /* DEF_H_ */

@@ -59,6 +59,26 @@ err_code_t qbufferCreate(qbuffer_node_t *p_node, uint32_t length)
   return err_code;
 }
 
+err_code_t qbufferCreateMem(qbuffer_node_t *p_node, uint8_t *p_buf, uint32_t length)
+{
+  err_code_t err_code = OK;
+
+
+  p_node->ptr_in  = 0;
+  p_node->ptr_out = 0;
+  p_node->length  = length;
+  p_node->p_buf   = (uint8_t *)p_buf;
+
+  if (p_node->p_buf == NULL)
+  {
+    p_node->length = 0;
+    err_code       = ERR_MEMORY;
+  }
+
+
+  return err_code;
+}
+
 uint32_t qbufferAvailable(qbuffer_node_t *p_node)
 {
   uint32_t length;

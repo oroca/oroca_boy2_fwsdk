@@ -123,13 +123,14 @@ static void tsUpdateTask( void const * argument )
   {
     for( ;; )
     {
+      delay(1);
     }
   }
 
   for( ;; )
   {
     tsUpdateTouchData();
-    delay(1);
+    delay(20);
   }
 }
 

@@ -29,6 +29,7 @@ typedef struct
 
  bool qbufferInit(void);
  err_code_t qbufferCreate(qbuffer_node_t *p_node, uint32_t length);
+ err_code_t qbufferCreateMem(qbuffer_node_t *p_node, uint8_t *p_buf, uint32_t length);
  uint32_t   qbufferAvailable(qbuffer_node_t *p_node);
  err_code_t qbufferWrite(qbuffer_node_t *p_node, uint8_t *p_data, uint32_t length);
  err_code_t qbufferWriteByte(qbuffer_node_t *p_node, uint8_t data);
