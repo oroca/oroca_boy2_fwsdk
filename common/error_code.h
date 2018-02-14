@@ -70,4 +70,9 @@
 #define ERR_LCD_TIMEOUT               411
 #define ERR_LCD_INVAILD_LAYER         412
 
+#define ERR_TS                        420
+#define ERR_TS_TIMEOUT                421
+#define ERR_TS_DEV_NOT_FOUND          422
+
+
 #endif /* ERROR_CODE_H_ */

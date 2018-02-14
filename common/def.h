@@ -220,16 +220,26 @@ typedef struct
   uint32_t length;
 } flash_attr_t;
 
-
-typedef struct
+typedef enum
 {
-  int16_t X; /*!< geometric X position of drawing */
-  int16_t Y; /*!< geometric Y position of drawing */
-} pixel_t;
-// Pointer on LCD Drawing point (pixel) geometric definition
-typedef pixel_t *p_pixel;
+  TOUCH_EVENT_NO_EVT        = 0x00, /*!< Touch Event : undetermined */
+  TOUCH_EVENT_PRESS_DOWN    = 0x01, /*!< Touch Event Press Down */
+  TOUCH_EVENT_LIFT_UP       = 0x02, /*!< Touch Event Lift Up */
+  TOUCH_EVENT_CONTACT       = 0x03, /*!< Touch Event Contact */
+  TOUCH_EVENT_NB_MAX        = 0x04  /*!< max number of touch events kind */
+} touch_event_t;
 
-
+typedef enum
+{
+  GEST_ID_NO_GESTURE = 0x00, /*!< Gesture not defined / recognized */
+  GEST_ID_MOVE_UP    = 0x01, /*!< Gesture Move Up */
+  GEST_ID_MOVE_RIGHT = 0x02, /*!< Gesture Move Right */
+  GEST_ID_MOVE_DOWN  = 0x03, /*!< Gesture Move Down */
+  GEST_ID_MOVE_LEFT  = 0x04, /*!< Gesture Move Left */
+  GEST_ID_ZOOM_IN    = 0x05, /*!< Gesture Zoom In */
+  GEST_ID_ZOOM_OUT   = 0x06, /*!< Gesture Zoom Out */
+  GEST_ID_NB_MAX     = 0x07 /*!< max number of gesture id */
+} touch_gesture_t;
 
 
 #define PI              3.1415926535897932384626433832795
