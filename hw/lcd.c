@@ -56,7 +56,9 @@ err_code_t  lcdInitEx(uint8_t orientation)
     lcdSelectLayer(_DEF_LCD_LAYER1);
     lcdClear(LCD_COLOR_BLACK);
 
-    lcdSetLayerVisible(_DEF_LCD_LAYER2, _DEF_DISABLE);
+    //lcdSetLayerVisible(_DEF_LCD_LAYER2, _DEF_DISABLE);
+    lcdSetTransparency(_DEF_LCD_LAYER2, 0);
+    lcdSetTransparency(_DEF_LCD_LAYER1, 255);
     lcdSetLayerVisible(_DEF_LCD_LAYER1, _DEF_ENABLE);
 
     lcdSelectLayer(_DEF_LCD_LAYER2);
@@ -94,6 +96,8 @@ void lcdDrawPixel(uint16_t x_pos, uint16_t y_pos, uint32_t rgb_code)
 }
 
 
+
+
 void lcdClear(uint32_t rgb_code)
 {
   drvLcdClear(rgb_code);
@@ -102,6 +106,16 @@ void lcdClear(uint32_t rgb_code)
 void lcdCopyLayer(uint32_t src_index, uint32_t dst_index)
 {
   drvLcdCopyLayer(src_index, dst_index);
+}
+
+bool lcdDrawAvailable(void)
+{
+  return drvLcdDrawAvailable();
+}
+
+void lcdOnDoubleBuffering(bool enable)
+{
+  drvLcdOnDoubleBuffering(enable);
 }
 
 
@@ -187,80 +201,74 @@ int lcdCmdif(int argc, char **argv)
       uint32_t x_mid, y_mid;
       bool x_dir = 1, y_dir = 1;
       uint32_t pre_time;
+      uint16_t color = 0;
 
       x_mid = lcdGetXSize()/2;
       y_mid = lcdGetYSize()/2;
-
-      lcdSelectLayer(_DEF_LCD_LAYER1);
-      lcdClear(LCD_COLOR_WHITE);
-      lcdSetLayerVisible(_DEF_LCD_LAYER2, _DEF_DISABLE);
-      lcdSetLayerVisible(_DEF_LCD_LAYER1, _DEF_ENABLE);
-
       lcdSelectLayer(_DEF_LCD_LAYER2);
 
       while(cmdifRxAvailable() == 0)
       {
-
-        pre_time = micros();
-        lcdClear(LCD_COLOR_WHITE);
-
-        /* Draw rectangle */
-        for(i = x_mid-50; i < x_mid+50; i++)
+        if(lcdDrawAvailable())
         {
-          for(j = y_mid-50; j < y_mid+50; j++)
+          cmdifPrintf("time : %d us\n", micros()-pre_time);
+
+          pre_time = micros();
+          lcdClear(LCD_COLOR_WHITE);
+
+          //drvLcdFillRect(x_mid - 50, y_mid - 50, 100, 100, LCD_COLOR_BLUE);
+
+          /* Draw rectangle */
+          for(i = x_mid-50; i < x_mid+50; i++)
           {
-            lcdDrawPixel(i, j, LCD_COLOR_BLUE);
-            //lcdDrawPixel(i, j, LCD_COLOR_RED);
-            //lcdDrawPixel(i, j, LCD_COLOR_BROWN);
+            for(j = y_mid-50; j < y_mid+50; j++)
+            {
+              lcdDrawPixel(i, j, LCD_COLOR_BLUE);
+            }
+          }
+
+          lcdOnDoubleBuffering(_DEF_ENABLE);
+
+          if(y_mid >= lcdGetYSize() - 55)
+          {
+            y_dir = 0;
+          }
+
+          if(y_mid - 50 <= 5)
+          {
+            y_dir = 1;
+          }
+
+          if(x_mid >= lcdGetXSize() - 55)
+          {
+            x_dir = 0;
+          }
+
+          if(x_mid - 50 <= 5)
+          {
+            x_dir = 1;
+          }
+
+          if(y_dir)
+          {
+            y_mid += 5;
+          }
+          else
+          {
+            y_mid -= 5;
+          }
+
+          if(x_dir)
+          {
+            x_mid += 5;
+          }
+          else
+          {
+            x_mid -= 5;
           }
         }
-
-        lcdCopyLayer(_DEF_LCD_LAYER2, _DEF_LCD_LAYER1);
-
-        if(y_mid >= lcdGetYSize() - 55)
-        {
-          y_dir = 0;
-        }
-
-        if(y_mid - 50 <= 5)
-        {
-          y_dir = 1;
-        }
-
-        if(x_mid >= lcdGetXSize() - 55)
-        {
-          x_dir = 0;
-        }
-
-        if(x_mid - 50 <= 5)
-        {
-          x_dir = 1;
-        }
-
-        if(y_dir)
-        {
-          y_mid += 5;
-        }
-        else
-        {
-          y_mid -= 5;
-        }
-
-        if(x_dir)
-        {
-          x_mid += 5;
-        }
-        else
-        {
-          x_mid -= 5;
-        }
-
-        cmdifPrintf("time : %d us\n", micros()-pre_time);
-        delay(10);
       }
-
       lcdClear(LCD_COLOR_WHITE);
-      lcdCopyLayer(_DEF_LCD_LAYER2, _DEF_LCD_LAYER1);
     }
     else
     {

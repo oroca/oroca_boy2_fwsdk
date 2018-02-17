@@ -27,6 +27,9 @@ void       lcdDrawPixel(uint16_t x_pos, uint16_t y_pos, uint32_t rgb_code);
 void       lcdClear(uint32_t rgb_code);
 void       lcdCopyLayer(uint32_t src_index, uint32_t dst_index);
 
+bool       lcdDrawAvailable(void);
+void       lcdOnDoubleBuffering(bool enable);
+
 err_code_t lcdSetTransparency(uint32_t layer_idx, uint8_t transparency);
 err_code_t lcdSetLayerAddr(uint32_t layer_idx, uint32_t addr);
 err_code_t lcdSetLayerWindow(uint16_t layer_idx, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
