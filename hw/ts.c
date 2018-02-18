@@ -177,10 +177,7 @@ int tsCmdif(int argc, char **argv)
       uint16_t x_axis, y_axis;
       uint32_t j;
 
-      lcdSelectLayer(_DEF_LCD_LAYER1);
       lcdClear(0xFFFF);
-      lcdSetLayerVisible(_DEF_LCD_LAYER2, _DEF_DISABLE);
-      lcdSetLayerVisible(_DEF_LCD_LAYER1, _DEF_ENABLE);
 
       while(cmdifRxAvailable() == 0)
       {

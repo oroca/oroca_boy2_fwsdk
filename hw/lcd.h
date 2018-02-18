@@ -16,32 +16,21 @@
 bool       lcdIsInit(void);
 
 err_code_t lcdInit(void);
-err_code_t lcdInitEx(uint8_t orientation);
 void       lcdReset(void);
 
-err_code_t lcdInitLayer(uint16_t layer_idx, uint32_t fb_addr);
-err_code_t lcdSelectLayer(uint32_t layer_idx);
 
 uint32_t   lcdReadPixel(uint16_t x_pos, uint16_t y_pos);
 void       lcdDrawPixel(uint16_t x_pos, uint16_t y_pos, uint32_t rgb_code);
 void       lcdClear(uint32_t rgb_code);
-void       lcdCopyLayer(uint32_t src_index, uint32_t dst_index);
 
 bool       lcdDrawAvailable(void);
-void       lcdOnDoubleBuffering(bool enable);
-
-err_code_t lcdSetTransparency(uint32_t layer_idx, uint8_t transparency);
-err_code_t lcdSetLayerAddr(uint32_t layer_idx, uint32_t addr);
-err_code_t lcdSetLayerWindow(uint16_t layer_idx, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
-err_code_t lcdSetLayerVisible(uint32_t layer_idx, uint8_t state);
+void       lcdRequestDraw(void);
 
 void       lcdDisplayOff(void);
 void       lcdDisplayOn(void);
 
-uint32_t   lcdGetXSize(void);
-uint32_t   lcdGetYSize(void);
-void       lcdSetXSize(uint32_t image_width_pixels);
-void       lcdSetYSize(uint32_t image_height_pixels);
+uint32_t   lcdGetWidth(void);
+uint32_t   lcdGetHeight(void);
 
 
 #endif /* _USE_HW_LCD */
