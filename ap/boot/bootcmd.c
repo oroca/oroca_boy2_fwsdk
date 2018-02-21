@@ -5,13 +5,13 @@
  *      Author: opus
  */
 
-#include "../../../fwsdk/ap/boot/bootcmd.h"
+#include "boot/bootcmd.h"
 
 #ifdef _USE_BOOTCMD
 
 #include <string.h>
 #include "hw.h"
-#include "../../../fwsdk/common/core/util.h"
+#include "util.h"
 
 
 #define BOOT_ERR_INVAILD_CMD            0xF0F0

@@ -52,7 +52,7 @@ int extiCmdif(int argc, char **argv)
   bool ret = true;
   uint8_t print_ch;
   uint8_t ch;
-  uint8_t all_ch[_HW_DEF_USER_EXTI_MAX] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+  uint8_t all_ch[_HW_DEF_EXTI_CH_MAX] = { 0 };
 
   if (argc == 3)
   {
@@ -71,7 +71,7 @@ int extiCmdif(int argc, char **argv)
     }
     else if (!strcmp("demo", argv[1]) && !strcmp("all", argv[2]))
     {
-      for(ch = 0; ch < _HW_DEF_USER_EXTI_MAX; ch++)
+      for(ch = 0; ch < _HW_DEF_EXTI_CH_MAX; ch++)
       {
         extiAttachInterrupt(ch, _DEF_EXTI_RISING, extiCmdifCallbackFunc, &all_ch[ch]);
       }
@@ -81,7 +81,7 @@ int extiCmdif(int argc, char **argv)
 
       }
 
-      for(ch = 0; ch < _HW_DEF_USER_EXTI_MAX; ch++)
+      for(ch = 0; ch < _HW_DEF_EXTI_CH_MAX; ch++)
       {
         extiDetachInterrupt(ch);
       }
