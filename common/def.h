@@ -48,6 +48,12 @@
 #define _DEF_LCD_LAYER2     1
 
 
+#define _DEF_AUDIO_MUTE_OFF 0
+#define _DEF_AUDIO_MUTE_ON  1
+#define _DEF_AUDIO_PAUSE    0
+#define _DEF_AUDIO_RESEUM   1
+
+
 #define _DEF_INPUT            0
 #define _DEF_INPUT_PULLUP     1
 #define _DEF_INPUT_PULLDOWN   2

@@ -74,5 +74,8 @@
 #define ERR_TS_TIMEOUT                421
 #define ERR_TS_DEV_NOT_FOUND          422
 
+#define ERR_AUDIO                     500
+#define ERR_AUDIO_TIMEOUT             501
+
 
 #endif /* ERROR_CODE_H_ */
