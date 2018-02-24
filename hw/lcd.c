@@ -47,13 +47,14 @@ err_code_t  lcdInit(void)
 
 void lcdReset(void)
 {
-  drvLcdReset();
+  //drvLcdReset();
 }
 
 
 uint32_t lcdReadPixel(uint16_t x_pos, uint16_t y_pos)
 {
-  return drvLcdReadPixel(x_pos, y_pos);
+  //return drvLcdReadPixel(x_pos, y_pos);
+  return 0;
 }
 
 void lcdDrawPixel(uint16_t x_pos, uint16_t y_pos, uint32_t rgb_code)
@@ -81,12 +82,12 @@ void lcdRequestDraw(void)
 
 void lcdDisplayOff(void)
 {
-  drvLcdDisplayOff();
+  //drvLcdDisplayOff();
 }
 
 void lcdDisplayOn(void)
 {
-  drvLcdDisplayOn();
+  //drvLcdDisplayOn();
 }
 
 
