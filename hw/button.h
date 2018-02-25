@@ -20,6 +20,7 @@
 
 
 bool buttonInit(void);
+void buttonResetTime(uint8_t ch);
 
 bool     buttonIsPressed(uint8_t ch);
 uint8_t  buttonGetState(uint8_t ch);

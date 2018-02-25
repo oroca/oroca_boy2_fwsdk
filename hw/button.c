@@ -130,6 +130,13 @@ bool buttonInit(void)
   return true;
 }
 
+void buttonResetTime(uint8_t ch)
+{
+  button_tbl[ch].pressed_start_time    = 0;
+  button_tbl[ch].pressed_end_time      = 0;
+  button_tbl[ch].released_start_time   = 0;
+  button_tbl[ch].released_end_time     = 0;
+}
 
 bool buttonIsPressed(uint8_t ch)
 {
