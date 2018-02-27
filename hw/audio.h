@@ -18,6 +18,10 @@
 err_code_t audioInit(uint32_t audio_freq);
 err_code_t audioStop(void);
 
+void       audioSelectDev(uint8_t dev);
+void       audioBeep(uint8_t note, uint32_t duration_ms);
+
+
 err_code_t audioPlay(uint16_t* p_buf, uint32_t size);
 err_code_t audioPause(void);
 err_code_t audioResume(void);

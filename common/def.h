@@ -53,6 +53,9 @@
 #define _DEF_AUDIO_PAUSE    0
 #define _DEF_AUDIO_RESEUM   1
 
+#define _DEF_AUDIO_HEADPHONE  0
+#define _DEF_AUDIO_SPEAKER    1
+
 
 #define _DEF_INPUT            0
 #define _DEF_INPUT_PULLUP     1
