@@ -14,6 +14,8 @@
 
 //-- Internal Variables
 //
+#define ADC_MAX_CH  DRV_ADC_MAX_CH
+
 
 //-- External Variables
 //

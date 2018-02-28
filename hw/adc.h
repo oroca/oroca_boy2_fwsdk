@@ -19,6 +19,8 @@
 #ifdef _USE_HW_ADC
 
 
+
+
 bool adcInit(void);
 
 uint16_t adcRead(uint8_t ch);
