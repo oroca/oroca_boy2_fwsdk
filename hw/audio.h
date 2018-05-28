@@ -31,7 +31,9 @@ err_code_t audioSetVol(uint8_t volume);
 err_code_t audioSetMute(uint32_t on_off);
 
 void       audioSetFreq(uint32_t audio_freq);
+void       audioSetPlayDoneISR(voidFuncPtr isr_func);
 
+bool       audioIsPlaying(void);
 
 #endif /* _USE_HW_AUDIO */
 

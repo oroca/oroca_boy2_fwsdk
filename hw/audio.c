@@ -113,6 +113,15 @@ bool audioIsMute(void)
   return state;
 }
 
+void audioSetPlayDoneISR(voidFuncPtr isr_func)
+{
+  drvAudioOutSetPlayDoneISR(isr_func);
+}
+
+bool audioIsPlaying(void)
+{
+  return drvAudioOutIsPlaying();
+}
 
 
 
